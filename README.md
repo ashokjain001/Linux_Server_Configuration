@@ -6,7 +6,7 @@ This is the fifth project for Udacity Fullstack Nanaodegree program, the require
 IP address for server - [18.217.114.9](18.217.114.9)
 
 
-## Linux Configuration Steps:
+## Linux Server Configuration:
 
 Spin up a linux server instance in [Amazon Lightsail](https://aws.amazon.com/lightsail/)
 
