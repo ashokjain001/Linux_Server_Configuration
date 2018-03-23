@@ -10,10 +10,6 @@ IP address for server - [18.217.114.9](18.217.114.9)
 
 Spin up a linux server instance in [Amazon Lightsail](https://aws.amazon.com/lightsail/)
 
-### Secure server
-
-log into the linux server and Update all currently installed packages.
-
 ### Update installed packages
 ```
   sudo apt-get update
