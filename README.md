@@ -1,4 +1,4 @@
-#Linux server configuration & web app deployment project
+# Linux server configuration & web app deployment project
 
 
 This is the fifth project for Udacity Fullstack Nanaodegree program, the requirement of this project is to configure a linux server(Amazon lightsail instance) and deploy Catalog web application that was developed earlier in the [program](https://github.com/ashokjain001/Item-catalog-web-app)
@@ -6,21 +6,21 @@ This is the fifth project for Udacity Fullstack Nanaodegree program, the require
 IP address for server - [18.217.114.9](18.217.114.9)
 
 
-##Linux Configuration Steps:
+## Linux Configuration Steps:
 
 Spin up a linux server instance in [Amazon Lightsail](https://aws.amazon.com/lightsail/)
 
-###Secure server
+### Secure server
 
 log into the linux server and Update all currently installed packages.
 
-###Update installed packages
+### Update installed packages
 ```
   sudo apt-get update
   sudo apt-get upgrade
 ```
- 
-###Create new user and grant sudo permission
+
+### Create new user and grant sudo permission
 ```
 #create linux user
 	sudo adduser grader
@@ -34,7 +34,7 @@ log into the linux server and Update all currently installed packages.
 
 ```
 
-###Key based authentication for new user 
+### Key based authentication for new user 
 In your local machine, use command below to generate public private key pair
 ```
 	cd ~/.ssh
@@ -52,7 +52,7 @@ Copy the content of the .pub file and paste into the .ssh/authorized_keys file o
  #paste the content of the .pub file from the local machine into /.ssh/authorized_keys file 
 ```
 
-###Disable remote login of the root user
+### Disable remote login of the root user
 ```
 	sudo nano /etc/ssh/sshd_config
 #set PermitRootLogin to no, and save the file
@@ -61,13 +61,13 @@ Copy the content of the .pub file and paste into the .ssh/authorized_keys file o
 	sudo service ssh restart
 ```
 
-###Change SSH access from port 22 to 2200
+### Change SSH access from port 22 to 2200
 ```
 	sudo nano /etc/ssh/sshd_config
 	change the line 'Port 22' to 'Port 2200', and save the file
 ```
 
-###Configure Uncomplicated Firewall 
+### Configure Uncomplicated Firewall 
 ```
 # close all incoming ports
 	sudo ufw default deny incoming
@@ -88,22 +88,28 @@ Copy the content of the .pub file and paste into the .ssh/authorized_keys file o
 	sudo ufw enable
 ```
 
-###Configure Local timezone to UTC
+### Now you should be able to log in through ssh without a password
+```
+	sudo ssh -vvv -i ~/.ssh/id_rsa grader@18.217.114.9 -p2200
+```
+
+
+### Configure Local timezone to UTC
 ```
 	sudo dpkg-reconfigure tzdata
 #choose 'None of the above' in the option and then select 'UTC'
 ```
 
 
-#Web server configuration and app deployment
+# Web server configuration and app deployment
 
-###Apace webserver and MOD-WSGI installation
+### Apace webserver and MOD-WSGI installation
 ```
 	sudo apt-get install apache2 libapache2-mod-wsgi
 ```
  MOD-WSGI acts as a gateway to our web application. Anytime we receive a request to access our web application, Apache2 webserver will communicate to our webapp through MOD-WSGI
 
-###PostgreSQl installation and configuration
+### PostgreSQl installation and configuration
 
 ```
 	sudo apt-get install postgresql
@@ -129,7 +135,7 @@ host    all             all             ::1/128                 md5
  we can leave as is.
 
 
-###Create postgres user and creating db for our catalog web app.
+### Create postgres user and creating db for our catalog web app.
 postgres creates a user 'postgres' by default while installation, we can use this user access to create a new catalog user and create catalog db for our web application.
 
 ```
@@ -147,7 +153,7 @@ postgres creates a user 'postgres' by default while installation, we can use thi
 now we have our 'catalogs' database ready and we need to reference it in our web application.
 
 
-###Web application install & config
+### Web application install & config
 
 first step is installing git and cloning our catalog web application
 ```
