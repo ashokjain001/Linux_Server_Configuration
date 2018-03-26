@@ -12,87 +12,87 @@ Spin up a linux server instance in [Amazon Lightsail](https://aws.amazon.com/lig
 
 ### Update installed packages
 ```
-  sudo apt-get update
-  sudo apt-get upgrade
+ sudo apt-get update
+ sudo apt-get upgrade
 ```
 
 ### Create new user and grant sudo permission
 ```
 #create linux user
-	sudo adduser grader
+sudo adduser grader
 #enter the passsword
 
 #grant sudo permission
-	sudo touch /etc/sudoers.d/grader
+sudo touch /etc/sudoers.d/grader
 
 #edit file to add this
-	grader ALL=(ALL) ALL
+grader ALL=(ALL) ALL
 
 ```
 
 ### Key based authentication for new user 
 In your local machine, use command below to generate public private key pair
 ```
-	cd ~/.ssh
-	ssh-keygen
+cd ~/.ssh
+ssh-keygen
 ```
 Copy the content of the .pub file and paste into the .ssh/authorized_keys file of user grader directory 
 ```
 #log in as grader user 
-	sudo -su grader
+sudo -su grader
 
 #create .ssh/authorized_keys file and paste the contents
-	mkdir /home/grader/.ssh
-	touch /home/grader/.ssh/authorized_keys
- 	nano /home/grader/.ssh/authorized_keys
- #paste the content of the .pub file from the local machine into /.ssh/authorized_keys file 
+mkdir /home/grader/.ssh
+touch /home/grader/.ssh/authorized_keys
+nano /home/grader/.ssh/authorized_keys
+#paste the content of the .pub file from the local machine into /.ssh/authorized_keys file 
 ```
 
 ### Disable remote login of the root user
 ```
-	sudo nano /etc/ssh/sshd_config
+sudo nano /etc/ssh/sshd_config
 #set PermitRootLogin to no, and save the file
 
 #restart ssh service
-	sudo service ssh restart
+sudo service ssh restart
 ```
 
 ### Change SSH access from port 22 to 2200
 ```
-	sudo nano /etc/ssh/sshd_config
-	change the line 'Port 22' to 'Port 2200', and save the file
+sudo nano /etc/ssh/sshd_config
+change the line 'Port 22' to 'Port 2200', and save the file
 ```
 
 ### Configure Uncomplicated Firewall 
 ```
 # close all incoming ports
-	sudo ufw default deny incoming
+sudo ufw default deny incoming
 
 # open all outgoing ports
-	sudo ufw default allow outgoing
+sudo ufw default allow outgoing
 
 # open ssh on port 2200
-	sudo ufw allow 2200/tcp
+sudo ufw allow 2200/tcp
 
 # open http on port 80
-	sudo ufw allow 80/tcp
+sudo ufw allow 80/tcp
 
 # open ntp on port 123
-	sudo ufw allow 123/udp
+sudo ufw allow 123/udp
 
 # turn on firewall
-	sudo ufw enable
+sudo ufw enable
 ```
 
 ### Now you should be able to log in through ssh without a password
 ```
-	sudo ssh -vvv -i ~/.ssh/id_rsa grader@18.217.114.9 -p2200
+sudo ssh -vvv -i ~/.ssh/id_rsa grader@18.217.114.9 -p2200
 ```
 
 
 ### Configure Local timezone to UTC
 ```
-	sudo dpkg-reconfigure tzdata
+sudo dpkg-reconfigure tzdata
 #choose 'None of the above' in the option and then select 'UTC'
 ```
 
@@ -101,14 +101,14 @@ Copy the content of the .pub file and paste into the .ssh/authorized_keys file o
 
 ### Apace webserver and MOD-WSGI installation
 ```
-	sudo apt-get install apache2 libapache2-mod-wsgi
+sudo apt-get install apache2 libapache2-mod-wsgi
 ```
  MOD-WSGI acts as a gateway to our web application. Anytime we receive a request to access our web application, Apache2 webserver will communicate to our webapp through MOD-WSGI
 
 ### PostgreSQl installation and configuration
 
 ```
-	sudo apt-get install postgresql
+sudo apt-get install postgresql
 ```
 By default postgreSQL is restricted to listening on localhost, we can confirm by looking at /etc/postgresql/9.5/main/pg_hba.config
 
@@ -136,13 +136,13 @@ postgres creates a user 'postgres' by default while installation, we can use thi
 
 ```
 #connect postgres as postgres user
-	sudo su - postgres
+sudo su - postgres
 
 #create a new user 'catalogs' with password 'catalogs'
-	CREATE USER catalogs WITH PASSWORD 'catalogs'
+CREATE USER catalogs WITH PASSWORD 'catalogs'
 
 #create a new DB named 'catalogs' by user 'catalogs' 
-	CREATE DATABASE catalogs WITH OWNER catalogs;	
+CREATE DATABASE catalogs WITH OWNER catalogs;	
 
 ```
 
@@ -154,29 +154,29 @@ now we have our 'catalogs' database ready and we need to reference it in our web
 first step is installing git and cloning our catalog web application
 ```
 #Installing git	
-	sudo apt-get install git
+sudo apt-get install git
 
 #cloning web application at this location 
-	cd /var/www/catalog/catalog
-	sudo git clone https://github.com/ashokjain001/Item-catalog-web-app.git	
+cd /var/www/catalog/catalog
+sudo git clone https://github.com/ashokjain001/Item-catalog-web-app.git	
 
 ```
 Now we will set up virtual environment so that we can install other dependencies required by our project.
 ```
 #Installing pip
-	sudo apt-get install python-pip
+sudo apt-get install python-pip
 
 #Installing virtual env
-	sudo pip install virtualvenv
+sudo pip install virtualvenv
 
 #Create new virtual environment
-	virtualenv venv 
+virtualenv venv 
 
 #Activating virtual environment
-	source venv/bin/activate 			
+source venv/bin/activate 			
 
 #Installing all the python packages and dependencies required by this project
-	pip install --upgrade -r requirements.txt
+pip install --upgrade -r requirements.txt
 ```
 Configure web application to connect to the postgres catalogs database which we created instead of SQLite 
 ```
@@ -196,7 +196,7 @@ engine = create_engine('postgresql://catalogs:catalogs@localhost/catalogs')
 Configure Apache to serve the web application using MOD-WSGI
 ```
 #create .wsgi file at this location 
-	sudo nano /var/www/catalog/catalog.wsgi
+sudo nano /var/www/catalog/catalog.wsgi
 ```
 
 Add the following line of code to your .wsgi config file
