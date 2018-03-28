@@ -3,7 +3,7 @@
 
 This is the fifth project for Udacity Fullstack Nanaodegree program, the requirement of this project is to configure a linux server(Amazon lightsail instance) and deploy Catalog web application that was developed earlier in the [program](https://github.com/ashokjain001/Item-catalog-web-app)
 
-IP address for server - [18.217.114.9](18.217.114.9)
+IP address for server - [18.217.114.9]
 
 
 ## Linux Server Configuration:
