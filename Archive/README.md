@@ -1,7 +1,7 @@
 # Linux server configuration & web app deployment project
 
 
-This is the fifth project for Udacity Fullstack Nanaodegree program, In this project I configured a Ubuntu linux server(Amazon lightsail instance) and deployed Restful web application that was developed earlier in the program [Catalog Web App](https://github.com/ashokjain001/Item-catalog-web-app") using Apache, Python Flask and PostgreSQL.
+This is the fifth project for Udacity Fullstack Nanaodegree program, the requirement of this project is to configure a linux server(Amazon lightsail instance) and deploy Catalog web application that was developed earlier in the [program](https://github.com/ashokjain001/Item-catalog-web-app)
 
 IP address for server - 18.217.114.9
 
